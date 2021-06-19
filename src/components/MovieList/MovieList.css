@@ -1,0 +1,11 @@
+.MovieList {
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 2rem;
+}
+
+.Pagination {
+    text-align: center;
+}
