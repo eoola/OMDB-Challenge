@@ -4,11 +4,12 @@ import './Search.css'
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { term: '', fromYear: 0 }
+        this.state = { term: '', fromYear: 0, toYear: 0 }
         this.handleSearch = this.handleSearch.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
         this.generateFromYears = this.generateFromYears.bind(this);
         this.handleFromYear = this.handleFromYear.bind(this);
+        this.handleToYear = this.handleToYear.bind(this);
         this.handleFilterClick = this.handleFilterClick.bind(this);
     }
 
@@ -18,11 +19,15 @@ class Search extends React.Component {
 
     handleSearch(event) {
         this.props.searchOMDB(this.state.term, 1)
-        this.setState({fromYear: 0})
+        this.setState({ fromYear: 0 })
     }
 
     handleFromYear(event) {
         this.setState({ fromYear: event.target.value })
+    }
+
+    handleToYear(event) {
+        this.setState({ toYear: event.target.value })
     }
 
     generateFromYears() {
@@ -46,15 +51,23 @@ class Search extends React.Component {
 
     handleFilterClick() {
         this.props.toggleFilter();
+        console.log(this.state.fromYear + ' ' + this.state.toYear);
+        this.props.setYearRange(this.state.fromYear, this.state.toYear);
     }
 
     render() {
         return (
             <div>
-                <form action="javascript:void(0);" onSubmit={this.handleSearch}>
-                    <input placeholder="Enter name of movie" onChange={this.handleTermChange}></input>
-                    <button>
-                        Submit
+                <form className="bqe" action="javascript:void(0);" onSubmit={this.handleSearch}>
+                    <input
+                        type="search"
+                        class="form-control"
+                        aria-label="Search"
+                        placeholder="Enter name of movie..."
+                        onChange={this.handleTermChange}>
+                    </input>
+                    <button type="submit" class="nz">
+                        Search
                     </button>
                 </form>
                 <select onChange={this.handleFromYear}>
@@ -62,7 +75,7 @@ class Search extends React.Component {
                         return <option>{year}</option>
                     })}
                 </select>
-                <select>
+                <select onChange={this.handleToYear}>
                     {this.generateToYears().map(year => {
                         return <option>{year}</option>
                     })}
