@@ -9,6 +9,7 @@ class Search extends React.Component {
         this.handleTermChange = this.handleTermChange.bind(this);
         this.generateFromYears = this.generateFromYears.bind(this);
         this.handleFromYear = this.handleFromYear.bind(this);
+        this.handleFilterClick = this.handleFilterClick.bind(this);
     }
 
     handleTermChange(event) {
@@ -43,6 +44,10 @@ class Search extends React.Component {
         return [2021];
     }
 
+    handleFilterClick() {
+        this.props.toggleFilter();
+    }
+
     render() {
         return (
             <div>
@@ -62,6 +67,7 @@ class Search extends React.Component {
                         return <option>{year}</option>
                     })}
                 </select>
+                <button onClick={this.handleFilterClick}>Filter</button>
             </div>
         )
     }

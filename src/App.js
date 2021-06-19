@@ -48,25 +48,31 @@ class App extends React.Component {
   }
 
   toggleFilter() {
+    this.setState({ filter: !this.state.filter })
   }
 
   render() {
-    return (
-      <div>
-        <Header title="Movie Search App"></Header>
-        <Search
-          yearRange={this.getYearRange}
-          searchOMDB={this.searchOMDB}></Search>
-        <MovieList movies={this.state.movies}></MovieList>
-        <Pagination
-          count={Math.ceil(this.state.totalResults / this.state.resultsPerPage)}
-          onChange={this.handlePageChange} />
-        <h1>{this.state.page}</h1>
-        <Footer title="Made By Demi">
-          <a href="https://github.com/eoola">Github</a>
-        </Footer>
-      </div>
-    );
+    if (this.state.filter) {
+      return <h1>Filtered</h1>
+    } else {
+      return (
+        <div>
+          <Header title="Movie Search App"></Header>
+          <Search
+            toggleFilter={this.toggleFilter}
+            yearRange={this.getYearRange}
+            searchOMDB={this.searchOMDB}></Search>
+          <MovieList movies={this.state.movies}></MovieList>
+          <Pagination
+            count={Math.ceil(this.state.totalResults / this.state.resultsPerPage)}
+            onChange={this.handlePageChange} />
+          <h1>{this.state.page}</h1>
+          <Footer title="Made By Demi">
+            <a href="https://github.com/eoola">Github</a>
+          </Footer>
+        </div>
+      );
+    }
   }
 }
 
