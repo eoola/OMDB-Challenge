@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/OMDB-Challenge/static/css/main.f620b26f.chunk.css",
-    "main.js": "/OMDB-Challenge/static/js/main.420a07f1.chunk.js",
-    "main.js.map": "/OMDB-Challenge/static/js/main.420a07f1.chunk.js.map",
+    "main.js": "/OMDB-Challenge/static/js/main.85f77544.chunk.js",
+    "main.js.map": "/OMDB-Challenge/static/js/main.85f77544.chunk.js.map",
     "runtime-main.js": "/OMDB-Challenge/static/js/runtime-main.8d8bf542.js",
     "runtime-main.js.map": "/OMDB-Challenge/static/js/runtime-main.8d8bf542.js.map",
     "static/js/2.df605c86.chunk.js": "/OMDB-Challenge/static/js/2.df605c86.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.8d8bf542.js",
     "static/js/2.df605c86.chunk.js",
     "static/css/main.f620b26f.chunk.css",
-    "static/js/main.420a07f1.chunk.js"
+    "static/js/main.85f77544.chunk.js"
   ]
 }
