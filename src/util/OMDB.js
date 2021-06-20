@@ -4,7 +4,7 @@ const OMDB = {
 
     async search(movieName, page) {
         const searchParam = 'spider man'
-        const url = `http://www.omdbapi.com/?apikey=e4906035&s=${movieName}&type=movie&page=${page}`
+        const url = `https://www.omdbapi.com/?apikey=e4906035&s=${movieName}&type=movie&page=${page}`
         let response = await fetch(url);
         response = await response.json();
         if (response.Search) {
