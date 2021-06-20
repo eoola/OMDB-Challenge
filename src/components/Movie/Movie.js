@@ -53,10 +53,11 @@ class Movie extends React.Component {
                     timeout="auto"
                     unmountOnExit>
                     <CardContent className="CollapseContent">
-                        <h5>Released: {this.props.movie.releaseDate}</h5>
+                        <h5>Release Date: {this.props.movie.releaseDate}</h5>
                         <h5>Runtime: {this.props.movie.runtime}utes</h5>
+                        <h5>Genre: {this.props.movie.Genre}</h5>
                         <h5>Director: {this.props.movie.director}</h5>
-                        <h5>{this.props.movie.plot}</h5>
+                        <h5>Plot: {this.props.movie.plot}</h5>
                         <h5></h5>
                     </CardContent>
                 </Collapse>
