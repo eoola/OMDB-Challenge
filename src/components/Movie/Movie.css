@@ -8,3 +8,7 @@
     min-height: 12rem;
     padding-top: 56.25%;
 }
+
+.IconButton {
+    padding: 0;
+}

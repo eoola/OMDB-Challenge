@@ -24,21 +24,31 @@ class Search extends React.Component {
 
     handleSearch(event) {
         this.props.searchOMDB(this.state.term, 1);
+        this.setState({ filter: false })
+        this.props.setFilter(false);
     }
 
     handleFromYear(event) {
         this.setState({ fromYear: event.target.value })
+        this.setState({ filter: true })
         this.setState({ disableFromFilter: false });
+        if (!this.state.disableToFilter && (this.state.toYear > event.target.value)) {
+            this.props.setFilter(true, event.target.value, this.state.toYear);
+        }
     }
 
     handleToYear(event) {
         this.setState({ toYear: event.target.value })
+        this.setState({ filter: true })
         this.setState({ disableToFilter: false})
+        if (!this.state.disableFromFilter && (event.target.value > this.state.fromYear) && this.state.filter) {
+            this.props.setFilter(true, this.state.fromYear, event.target.value);
+        }
     }
 
     generateFromYears() {
         let years = []
-        for (let index = 1900; index <= currentDate.getFullYear(); index++) {
+        for (let index = 1888; index <= currentDate.getFullYear(); index++) {
             years.push(index);
         }
         return years
@@ -46,7 +56,7 @@ class Search extends React.Component {
 
     generateToYears(minYear) {
         let years = []
-        for (let index = 1900; index <= currentDate.getFullYear(); index++) {
+        for (let index = 1888; index <= currentDate.getFullYear(); index++) {
             years.push(index);
         }
         return years
@@ -72,12 +82,12 @@ class Search extends React.Component {
                         Search
                     </button>
                 </form>
-                <select onChange={this.handleFromYear}>
+                <select defaultValue={currentDate.getFullYear()} onChange={this.handleFromYear}>
                     {this.generateFromYears().map(year => {
                         return <option>{year}</option>
                     })}
                 </select>
-                <select onChange={this.handleToYear}>
+                <select defaultValue={currentDate.getFullYear()} onChange={this.handleToYear}>
                     {this.generateToYears().map(year => {
                         return <option>{year}</option>
                     })}
@@ -86,7 +96,7 @@ class Search extends React.Component {
                     control={
                         <Switch
                             disabled={(this.state.disableFromFilter || this.state.disableToFilter) || (this.state.toYear < this.state.fromYear)}
-                            checked={this.state.filter}
+                            checked={this.state.filter && (!this.state.disableFromFilter && !this.state.disableToFilter)}
                             onChange={this.handleFilterClick}
                             name="filter"
                             color="secondary"

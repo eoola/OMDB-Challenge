@@ -15,10 +15,9 @@ const OMDB = {
                         id: movie['imdbID'],
                         title: movie['Title'],
                         year: movie['Year'],
-                        img: movie['Poster']
+                        img: movie['Poster'] === "N/A" ? 'https://www.escapeauthority.com/wp-content/uploads/2116/11/No-image-found.jpg' : movie['Poster']
                     }, extraInfo)
-                })),
-                totalResults: (response.totalResults)
+                })), totalResults: (response.totalResults)
             }
         }
     },
@@ -34,7 +33,8 @@ const OMDB = {
                     return {
                         runtime: response.Runtime,
                         genre: response.Genre,
-                        director: response.Director
+                        director: response.Director,
+                        plot: response.Plot === "N/A" ? 'Plot not found' : response.Plot
                     }
                 }
             })

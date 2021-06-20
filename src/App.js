@@ -11,30 +11,54 @@ import React from 'react';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { movies: [], page: 1, pageOffset: 1, searchTerm: '', totalResults: 0, resultsPerPage: 10, yearRange: [], filter: false, filteredMovies: [] };
+    this.state = { noResultsFound: false, loading: false, movies: [], page: 1, pageOffset: 1, searchTerm: '', totalResults: 0, resultsPerPage: 10, yearRange: [], filter: false, filteredMovies: [] };
     this.searchOMDB = this.searchOMDB.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this);
     //this.getYearRange = this.getYearRange.bind(this);
     this.setFilter = this.setFilter.bind(this);
     this.setYearRange = this.setYearRange.bind(this);
     this.generateMoreMovies = this.generateMoreMovies.bind(this);
+    this.pageLoading = this.pageLoading.bind(this);
+    this.pageDoneLoading = this.pageDoneLoading.bind(this);
   }
 
   searchOMDB(movieName) {
-    OMDB.search(movieName, this.state.page)
+    this.pageLoading()
+    OMDB.search(movieName, 1)
       .then(result => {
+        this.setState({ page: 1 });
         this.setState({ movies: result.movies })
         this.setState({ searchTerm: movieName })
         this.setState({ totalResults: result.totalResults })
+        this.setState({ pageOffset: 1 })
+        this.pageDoneLoading();
         //this.getYearRange(result.movies);
+      }).catch(error => {
+        this.setState({noResultsFound: true});
+        this.setState({ page: 1 });
+        this.setState({ movies: [] })
+        this.setState({ searchTerm: movieName })
+        this.setState({ totalResults: 0 })
+        this.setState({ pageOffset: 1 })
+        this.pageDoneLoading();
       })
   }
 
+  pageLoading() {
+    this.setState({ loading: true });
+  }
+
+  pageDoneLoading() {
+    this.setState({ loading: false });
+  }
+
   handlePageChange(event, newPage) {
+    this.pageLoading()
     this.setState({ page: newPage })
     OMDB.search(this.state.searchTerm, newPage)
       .then(result => {
         this.setState({ movies: result.movies })
+        this.pageDoneLoading();
       })
     document.documentElement.scrollTop = 0;
   }
@@ -70,14 +94,20 @@ class App extends React.Component {
   }
 
   generateMoreMovies() {
+    this.pageLoading()
     let currentMovies = this.state.filteredMovies;
     OMDB.search(this.state.searchTerm, (this.state.page + this.state.pageOffset))
       .then(result => {
+        console.log(result);
         let newMovies = result.movies;
         Array.prototype.push.apply(currentMovies, newMovies.filter(movie => {
           return (movie.year >= this.state.yearRange[0]) && (movie.year <= this.state.yearRange[1]);
         }))
         this.setState({ filteredMovies: currentMovies })
+        this.pageDoneLoading();
+      }).catch(error => {
+        this.pageDoneLoading();
+        document.getElementById("Button").disabled = true;
       })
     const currentPageOffset = this.state.pageOffset
     this.setState({ pageOffset: currentPageOffset + 1 });
@@ -93,10 +123,8 @@ class App extends React.Component {
             setFilter={this.setFilter}
             searchOMDB={this.searchOMDB}></Search>
           <MovieList movies={this.state.filteredMovies}></MovieList>
-          <ol>{this.state.filteredMovies.map(movie => {
-            return <li>{movie.year}</li>
-          })}</ol>
-          <button onClick={this.generateMoreMovies}>Show More</button>
+          {this.state.loading ? <h1>Loading Results...</h1> : <h1></h1>}
+          <button id="Button" onClick={this.generateMoreMovies}>Show More</button>
           <Footer title="Made By Demi">
             <a href="https://github.com/eoola">Github</a>
           </Footer>
@@ -111,8 +139,11 @@ class App extends React.Component {
             setFilter={this.setFilter}
             yearRange={this.state.yearRange}
             searchOMDB={this.searchOMDB}></Search>
+          {this.state.loading ? <h1>Loading Results...</h1> : <h1></h1>}
+          {this.state.noResultsFound ? <h1>No results found</h1> : <h1></h1>}
           <MovieList movies={this.state.movies}></MovieList>
           <Pagination
+            page={this.state.page}
             className="Pagination"
             count={Math.ceil(this.state.totalResults / this.state.resultsPerPage)}
             onChange={this.handlePageChange} />
