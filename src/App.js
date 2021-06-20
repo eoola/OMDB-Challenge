@@ -24,6 +24,7 @@ class App extends React.Component {
 
   searchOMDB(movieName) {
     this.pageLoading()
+    this.setState({noResultsFound: false})
     OMDB.search(movieName, 1)
       .then(result => {
         this.setState({ page: 1 });
