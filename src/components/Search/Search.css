@@ -1,6 +1,12 @@
-form {
-    text-align: center;
+.Search {
+    display: flex;
+    justify-content: center;
 }
+
+form {
+    margin-right: 2rem;
+}
+
 input {
-    width: 10rem;
+    min-width: 10rem;
 }

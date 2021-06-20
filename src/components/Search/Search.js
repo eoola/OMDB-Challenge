@@ -1,10 +1,15 @@
 import React from 'react';
 import './Search.css'
+import { FormControlLabel } from '@material-ui/core';
+import { Switch } from '@material-ui/core';
+
+const currentDate = new Date();
 
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { term: '', fromYear: 0, toYear: 0 }
+        console.log(this.props.yearRange);
+        this.state = { term: '', fromYear: 1900, toYear: 1900, filter: false, disableFromFilter: true, disableToFilter: true }
         this.handleSearch = this.handleSearch.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
         this.generateFromYears = this.generateFromYears.bind(this);
@@ -18,21 +23,22 @@ class Search extends React.Component {
     }
 
     handleSearch(event) {
-        this.props.searchOMDB(this.state.term, 1)
-        this.setState({ fromYear: 0 })
+        this.props.searchOMDB(this.state.term, 1);
     }
 
     handleFromYear(event) {
         this.setState({ fromYear: event.target.value })
+        this.setState({ disableFromFilter: false });
     }
 
     handleToYear(event) {
         this.setState({ toYear: event.target.value })
+        this.setState({ disableToFilter: false})
     }
 
     generateFromYears() {
         let years = []
-        for (let index = this.props.yearRange()[1]; index <= this.props.yearRange()[0]; index++) {
+        for (let index = 1900; index <= currentDate.getFullYear(); index++) {
             years.push(index);
         }
         return years
@@ -40,33 +46,29 @@ class Search extends React.Component {
 
     generateToYears(minYear) {
         let years = []
-        if (this.state.fromYear != 0) {
-            for (let index = this.state.fromYear; index <= this.props.yearRange()[0]; index++) {
-                years.push(index);
-            }
-            return years;
+        for (let index = 1900; index <= currentDate.getFullYear(); index++) {
+            years.push(index);
         }
-        return [2021];
+        return years
     }
 
     handleFilterClick() {
-        this.props.toggleFilter();
         console.log(this.state.fromYear + ' ' + this.state.toYear);
+        const nextFilterState = !this.state.filter;
         this.props.setYearRange(this.state.fromYear, this.state.toYear);
+        this.setState({ filter: nextFilterState })
+        this.props.setFilter(nextFilterState, this.state.fromYear, this.state.toYear);
     }
 
     render() {
         return (
-            <div>
-                <form className="bqe" action="javascript:void(0);" onSubmit={this.handleSearch}>
+            <div className="Search">
+                <form action="javascript:void(0);" onSubmit={this.handleSearch}>
                     <input
-                        type="search"
-                        class="form-control"
-                        aria-label="Search"
                         placeholder="Enter name of movie..."
                         onChange={this.handleTermChange}>
                     </input>
-                    <button type="submit" class="nz">
+                    <button >
                         Search
                     </button>
                 </form>
@@ -80,7 +82,18 @@ class Search extends React.Component {
                         return <option>{year}</option>
                     })}
                 </select>
-                <button onClick={this.handleFilterClick}>Filter</button>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            disabled={(this.state.disableFromFilter || this.state.disableToFilter) || (this.state.toYear < this.state.fromYear)}
+                            checked={this.state.filter}
+                            onChange={this.handleFilterClick}
+                            name="filter"
+                            color="secondary"
+                        />
+                    }
+                    label="Filter"
+                />
             </div>
         )
     }

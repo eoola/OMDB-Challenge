@@ -4,5 +4,5 @@ header {
     color: white;
     text-align: center;
     font-family: monospace;
-    padding-top: 5vh;
+    min-height: 5vh;
 }

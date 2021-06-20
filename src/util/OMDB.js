@@ -3,7 +3,6 @@ const apiKey = 'e4906035'
 const OMDB = {
 
     async search(movieName, page) {
-        console.log('got called');
         const searchParam = 'spider man'
         const url = `http://www.omdbapi.com/?apikey=e4906035&s=${movieName}&type=movie&page=${page}`
         let response = await fetch(url);

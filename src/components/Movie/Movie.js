@@ -3,6 +3,7 @@ import { Card } from '@material-ui/core';
 import { CardMedia } from '@material-ui/core';
 import { CardHeader } from '@material-ui/core';
 import { CardContent } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import './Movie.css'
 
 class Movie extends React.Component {

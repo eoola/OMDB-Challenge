@@ -1,9 +1,11 @@
 .MovieList {
+    min-height: 75vh;
     text-align: center;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     margin: 2rem;
+    padding: 0;
 }
 
 .Pagination {

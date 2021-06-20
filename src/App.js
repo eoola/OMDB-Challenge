@@ -14,8 +14,8 @@ class App extends React.Component {
     this.state = { movies: [], page: 1, pageOffset: 1, searchTerm: '', totalResults: 0, resultsPerPage: 10, yearRange: [], filter: false, filteredMovies: [] };
     this.searchOMDB = this.searchOMDB.bind(this)
     this.handlePageChange = this.handlePageChange.bind(this);
-    this.getYearRange = this.getYearRange.bind(this);
-    this.toggleFilter = this.toggleFilter.bind(this);
+    //this.getYearRange = this.getYearRange.bind(this);
+    this.setFilter = this.setFilter.bind(this);
     this.setYearRange = this.setYearRange.bind(this);
     this.generateMoreMovies = this.generateMoreMovies.bind(this);
   }
@@ -26,12 +26,12 @@ class App extends React.Component {
         this.setState({ movies: result.movies })
         this.setState({ searchTerm: movieName })
         this.setState({ totalResults: result.totalResults })
+        //this.getYearRange(result.movies);
       })
   }
 
   handlePageChange(event, newPage) {
     this.setState({ page: newPage })
-    console.log(this.state.movies);
     OMDB.search(this.state.searchTerm, newPage)
       .then(result => {
         this.setState({ movies: result.movies })
@@ -39,33 +39,34 @@ class App extends React.Component {
     document.documentElement.scrollTop = 0;
   }
 
-  getYearRange() {
-    if (this.state.movies.length != 0) {
-      const movies = this.state.movies.slice(0).sort((a, b) => {
+  /*
+  getYearRange(movies) {
+    if (movies.length > 1) {
+      const newMovies = movies.slice(0).sort((a, b) => {
         return a.year < b.year;
       })
-      return [movies[0].year, movies[movies.length - 1].year];
+      this.setState({ yearRange: [newMovies[newMovies.length - 1].year, newMovies[0].year] });
+    } else {
+      this.setState({ yearRange: [2020, 2021] })
     }
-    return [2020, 2021]
   }
+  */
 
-  toggleFilter() {
-    const nextState = !this.state.filter
-    this.setState({ filter: !this.state.filter })
-    if (nextState) {
-      console.log('next state called')
+  setFilter(filterState, fromYear, toYear) {
+    this.setState({ filter: filterState })
+    if (filterState) {
       let currentMovies = this.state.movies;
       this.setState({
         filteredMovies: currentMovies.filter(movie => {
-          return (movie.year >= this.state.yearRange[0]) && (movie.year <= this.state.yearRange[1]);
+          return (movie.year >= fromYear) && (movie.year <= toYear);
         })
       })
     }
   }
 
   setYearRange(minYear, maxYear) {
-    console.log('year range set')
     this.setState({ yearRange: [minYear, maxYear] })
+    console.log('year range set')
   }
 
   generateMoreMovies() {
@@ -85,14 +86,16 @@ class App extends React.Component {
   render() {
     if (this.state.filter) {
       return (
-        <div>
+        <div className="App">
           <Header title="Movie Search App"></Header>
           <Search
             setYearRange={this.setYearRange}
-            toggleFilter={this.toggleFilter}
-            yearRange={this.getYearRange}
+            setFilter={this.setFilter}
             searchOMDB={this.searchOMDB}></Search>
           <MovieList movies={this.state.filteredMovies}></MovieList>
+          <ol>{this.state.filteredMovies.map(movie => {
+            return <li>{movie.year}</li>
+          })}</ol>
           <button onClick={this.generateMoreMovies}>Show More</button>
           <Footer title="Made By Demi">
             <a href="https://github.com/eoola">Github</a>
@@ -101,18 +104,18 @@ class App extends React.Component {
       )
     } else {
       return (
-        <div>
+        <div className="App">
           <Header title="Movie Search App"></Header>
           <Search
             setYearRange={this.setYearRange}
-            toggleFilter={this.toggleFilter}
-            yearRange={this.getYearRange}
+            setFilter={this.setFilter}
+            yearRange={this.state.yearRange}
             searchOMDB={this.searchOMDB}></Search>
           <MovieList movies={this.state.movies}></MovieList>
           <Pagination
+            className="Pagination"
             count={Math.ceil(this.state.totalResults / this.state.resultsPerPage)}
             onChange={this.handlePageChange} />
-          <h1>{this.state.page}</h1>
           <Footer title="Made By Demi">
             <a href="https://github.com/eoola">Github</a>
           </Footer>
