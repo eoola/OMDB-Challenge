@@ -30,10 +30,14 @@ const OMDB = {
             .then(jsonResponse => {
                 let response = jsonResponse
                 if (response.Genre) {
+                    console.log(response.imdbRating);
+                    console.log(response.releaseDate);
                     return {
+                        imdbRating: response.imdbRating,
+                        releaseDate: response.Released,
                         runtime: response.Runtime,
                         genre: response.Genre,
-                        director: response.Director,
+                        director: response.Director === "N/A" ? "No Directors found" : response.Director,
                         plot: response.Plot === "N/A" ? 'Plot not found' : response.Plot
                     }
                 }

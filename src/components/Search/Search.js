@@ -9,7 +9,7 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         console.log(this.props.yearRange);
-        this.state = { term: '', fromYear: 1900, toYear: 1900, filter: false, disableFromFilter: true, disableToFilter: true }
+        this.state = {term: '', fromYear: 1900, toYear: 1900, filter: false, disableFromFilter: true, disableToFilter: true }
         this.handleSearch = this.handleSearch.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
         this.generateFromYears = this.generateFromYears.bind(this);
