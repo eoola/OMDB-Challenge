@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/OMDB-Challenge/static/css/main.f620b26f.chunk.css",
-    "main.js": "/OMDB-Challenge/static/js/main.bdb2f2c5.chunk.js",
-    "main.js.map": "/OMDB-Challenge/static/js/main.bdb2f2c5.chunk.js.map",
+    "main.css": "/OMDB-Challenge/static/css/main.6914f12e.chunk.css",
+    "main.js": "/OMDB-Challenge/static/js/main.d3fa84d8.chunk.js",
+    "main.js.map": "/OMDB-Challenge/static/js/main.d3fa84d8.chunk.js.map",
     "runtime-main.js": "/OMDB-Challenge/static/js/runtime-main.8d8bf542.js",
     "runtime-main.js.map": "/OMDB-Challenge/static/js/runtime-main.8d8bf542.js.map",
     "static/js/2.df605c86.chunk.js": "/OMDB-Challenge/static/js/2.df605c86.chunk.js",
@@ -10,14 +10,14 @@
     "static/js/3.0f91c184.chunk.js": "/OMDB-Challenge/static/js/3.0f91c184.chunk.js",
     "static/js/3.0f91c184.chunk.js.map": "/OMDB-Challenge/static/js/3.0f91c184.chunk.js.map",
     "index.html": "/OMDB-Challenge/index.html",
-    "static/css/main.f620b26f.chunk.css.map": "/OMDB-Challenge/static/css/main.f620b26f.chunk.css.map",
+    "static/css/main.6914f12e.chunk.css.map": "/OMDB-Challenge/static/css/main.6914f12e.chunk.css.map",
     "static/js/2.df605c86.chunk.js.LICENSE.txt": "/OMDB-Challenge/static/js/2.df605c86.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/OMDB-Challenge/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.8d8bf542.js",
     "static/js/2.df605c86.chunk.js",
-    "static/css/main.f620b26f.chunk.css",
-    "static/js/main.bdb2f2c5.chunk.js"
+    "static/css/main.6914f12e.chunk.css",
+    "static/js/main.d3fa84d8.chunk.js"
   ]
 }
