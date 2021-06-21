@@ -60,6 +60,14 @@ class App extends React.Component {
       .then(result => {
         this.setState({ movies: result.movies })
         this.pageDoneLoading();
+      }).catch(error => {
+        this.setState({noResultsFound: true});
+        this.setState({ page: 1 });
+        this.setState({ movies: [] })
+        this.setState({ searchTerm: movieName })
+        this.setState({ totalResults: 0 })
+        this.setState({ pageOffset: 1 })
+        this.pageDoneLoading();
       })
     document.documentElement.scrollTop = 0;
   }
