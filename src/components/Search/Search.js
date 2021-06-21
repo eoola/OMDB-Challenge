@@ -41,7 +41,7 @@ class Search extends React.Component {
         this.setState({ toYear: event.target.value })
         this.setState({ filter: true })
         this.setState({ disableToFilter: false})
-        if (!this.state.disableFromFilter && (event.target.value > this.state.fromYear) && this.state.filter) {
+        if (!this.state.disableFromFilter && (event.target.value > this.state.fromYear)) {
             this.props.setFilter(true, this.state.fromYear, event.target.value);
         }
     }
@@ -82,17 +82,19 @@ class Search extends React.Component {
                         Search
                     </button>
                 </form>
+                <span>Show results from:</span>
                 <select defaultValue={currentDate.getFullYear()} onChange={this.handleFromYear}>
                     {this.generateFromYears().map(year => {
                         return <option>{year}</option>
                     })}
                 </select>
+                <span>To: </span>
                 <select defaultValue={currentDate.getFullYear()} onChange={this.handleToYear}>
                     {this.generateToYears().map(year => {
                         return <option>{year}</option>
                     })}
                 </select>
-                <FormControlLabel
+                <FormControlLabel className="Switch"
                     control={
                         <Switch
                             disabled={(this.state.disableFromFilter || this.state.disableToFilter) || (this.state.toYear < this.state.fromYear)}

@@ -33,10 +33,10 @@ const OMDB = {
                     console.log(response.imdbRating);
                     console.log(response.releaseDate);
                     return {
-                        imdbRating: response.imdbRating,
-                        releaseDate: response.Released,
-                        runtime: response.Runtime,
-                        genre: response.Genre,
+                        imdbRating: response.imdbRating === "N/A" ? "No Ratings Found" : response.imdbRating,
+                        releaseDate: response.Released === "N/A" ? "No Release Date Found" : response.Released,
+                        runtime: response.Runtime === "N/A" ? "No Runtime Found" : response.Runtime + 'utes',
+                        genre: response.Genre === "N/A" ? "No Genre Found" : response.Genre,
                         director: response.Director === "N/A" ? "No Directors found" : response.Director,
                         plot: response.Plot === "N/A" ? 'Plot not found' : response.Plot
                     }

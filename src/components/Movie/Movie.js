@@ -13,6 +13,7 @@ import { Collapse } from '@material-ui/core';
 import './Movie.css'
 
 
+
 class Movie extends React.Component {
     constructor(props) {
         super(props);
@@ -54,8 +55,8 @@ class Movie extends React.Component {
                     unmountOnExit>
                     <CardContent className="CollapseContent">
                         <h5>Release Date: {this.props.movie.releaseDate}</h5>
-                        <h5>Runtime: {this.props.movie.runtime}utes</h5>
-                        <h5>Genre: {this.props.movie.Genre}</h5>
+                        <h5>Runtime: {this.props.movie.runtime}</h5>
+                        <h5>Genre: {this.props.movie.genre}</h5>
                         <h5>Director: {this.props.movie.director}</h5>
                         <h5>Plot: {this.props.movie.plot}</h5>
                         <h5></h5>
