@@ -33,6 +33,7 @@ class Search extends React.Component {
         this.setState({ filter: true })
         this.setState({ disableFromFilter: false });
         if (this.state.toYear > event.target.value) {
+            console.log(this.props);
             this.props.setFilter(true, event.target.value, this.state.toYear);
         }
     }
