@@ -1,10 +1,10 @@
-const apiKey = 'e4906035'
+const apikey = process.env.REACT_APP_API_KEY;
 
 const OMDB = {
 
     async search(movieName, page) {
         const searchParam = 'spider man'
-        const url = `https://www.omdbapi.com/?apikey=e4906035&s=${movieName}&type=movie&page=${page}`
+        const url = `https://www.omdbapi.com/?apikey=${apikey}&s=${movieName}&type=movie&page=${page}`
         let response = await fetch(url);
         response = await response.json();
         if (response.Search) {
@@ -22,7 +22,7 @@ const OMDB = {
         }
     },
     getExtraInfo(imdbID) {
-        const url = `https://www.omdbapi.com/?apikey=e4906035&i=${imdbID}&type=movie&plot='short'`
+        const url = `https://www.omdbapi.com/?apikey=${apikey}&i=${imdbID}&type=movie&plot='short'`
         return fetch(url)
             .then(response => {
                 return response.json();
