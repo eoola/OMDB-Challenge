@@ -64,7 +64,6 @@ class App extends React.Component {
         this.setState({noResultsFound: true});
         this.setState({ page: 1 });
         this.setState({ movies: [] })
-        this.setState({ searchTerm: movieName })
         this.setState({ totalResults: 0 })
         this.setState({ pageOffset: 1 })
         this.pageDoneLoading();
