@@ -81,6 +81,7 @@ class App extends React.Component {
     this.setState({ filter: filterState })
     if (filterState) {
       let currentMovies = this.state.movies;
+      this.setYearRange(fromYear, toYear);
       this.setState({
         filteredMovies: currentMovies.filter(movie => {
           return (movie.year >= fromYear) && (movie.year <= toYear);
@@ -102,6 +103,7 @@ class App extends React.Component {
         console.log(result);
         let newMovies = result.movies;
         Array.prototype.push.apply(currentMovies, newMovies.filter(movie => {
+          console.log(this.state.yearRange);
           return (movie.year >= this.state.yearRange[0]) && (movie.year <= this.state.yearRange[1]);
         }))
         this.setState({ filteredMovies: currentMovies })
