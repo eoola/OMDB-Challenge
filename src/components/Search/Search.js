@@ -9,7 +9,7 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         console.log(this.props.yearRange);
-        this.state = {term: '', fromYear: 1900, toYear: 1900, filter: false, disableFromFilter: true, disableToFilter: true }
+        this.state = {term: '', fromYear: 2021, toYear: 2021, filter: false, disableFromFilter: true}
         this.handleSearch = this.handleSearch.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
         this.generateFromYears = this.generateFromYears.bind(this);
@@ -32,7 +32,7 @@ class Search extends React.Component {
         this.setState({ fromYear: event.target.value })
         this.setState({ filter: true })
         this.setState({ disableFromFilter: false });
-        if (!this.state.disableToFilter && (this.state.toYear > event.target.value)) {
+        if (this.state.toYear > event.target.value) {
             this.props.setFilter(true, event.target.value, this.state.toYear);
         }
     }
@@ -40,7 +40,6 @@ class Search extends React.Component {
     handleToYear(event) {
         this.setState({ toYear: event.target.value })
         this.setState({ filter: true })
-        this.setState({ disableToFilter: false})
         if (!this.state.disableFromFilter && (event.target.value > this.state.fromYear)) {
             this.props.setFilter(true, this.state.fromYear, event.target.value);
         }
@@ -97,8 +96,8 @@ class Search extends React.Component {
                 <FormControlLabel className="Switch"
                     control={
                         <Switch
-                            disabled={(this.state.disableFromFilter || this.state.disableToFilter) || (this.state.toYear < this.state.fromYear)}
-                            checked={this.state.filter && (!this.state.disableFromFilter && !this.state.disableToFilter)}
+                            disabled={this.state.disableFromFilter || (this.state.toYear < this.state.fromYear)}
+                            checked={this.state.filter}
                             onChange={this.handleFilterClick}
                             name="filter"
                             color="secondary"
